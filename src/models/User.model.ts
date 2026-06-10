@@ -1,7 +1,7 @@
-import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import mongoose, { Document, Schema } from "mongoose";
+import bcrypt from "bcryptjs";
 
-export type UserRole = ''guest'' | ''user'' | ''admin'';
+export type UserRole = "guest" | "user" | "admin";
 
 export interface IUser extends Document {
   fullName: string;
@@ -22,28 +22,27 @@ const userSchema = new Schema<IUser>(
   {
     fullName: {
       type: String,
-      required: [true, ''Full name is required''],
+      required: true,
       trim: true,
-      maxlength: [100, ''Full name cannot exceed 100 characters''],
+      maxlength: 100,
     },
     email: {
       type: String,
-      required: [true, ''Email is required''],
+      required: true,
       unique: true,
       lowercase: true,
       trim: true,
-      match: [/^\S+@\S+\.\S+$/, ''Please enter a valid email''],
     },
     password: {
       type: String,
-      required: [true, ''Password is required''],
-      minlength: [8, ''Password must be at least 8 characters''],
+      required: true,
+      minlength: 8,
       select: false,
     },
     role: {
       type: String,
-      enum: [''guest'', ''user'', ''admin''],
-      default: ''user'',
+      enum: ["guest", "user", "admin"],
+      default: "user",
     },
     avatar: {
       type: String,
@@ -67,23 +66,23 @@ const userSchema = new Schema<IUser>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
   this.password = await bcrypt.hash(this.password, 12);
   next();
 });
 
 userSchema.methods.comparePassword = function (
-  candidate: string
+  candidate: string,
 ): Promise<boolean> {
   return bcrypt.compare(candidate, this.password);
-});
+};
 
-userSchema.set('toJSON', {
-  transform(_, ret) {
+userSchema.set("toJSON", {
+  transform(_doc, ret: Record<string, any>) {
     delete ret.password;
     delete ret.refreshToken;
     delete ret.resetPasswordToken;
@@ -92,4 +91,4 @@ userSchema.set('toJSON', {
   },
 });
 
-export default mongoose.model<IUser>('User', userSchema);
+export default mongoose.model<IUser>("User", userSchema);

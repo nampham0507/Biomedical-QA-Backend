@@ -1,7 +1,14 @@
-import mongoose, { Document, Schema } from ''mongoose'';
+import mongoose, { Document, Schema } from "mongoose";
 
-export type DatasetType = ''pdf'' | ''txt'' | ''pubmedqa'' | ''bioasq'' | ''medquad'' | ''json'' | ''csv'';
-export type DatasetStatus = ''pending'' | ''processing'' | ''indexed'' | ''error'';
+export type DatasetType =
+  | "pdf"
+  | "txt"
+  | "pubmedqa"
+  | "bioasq"
+  | "medquad"
+  | "json"
+  | "csv";
+export type DatasetStatus = "pending" | "processing" | "indexed" | "error";
 
 export interface IDataset extends Document {
   name: string;
@@ -22,7 +29,7 @@ const datasetSchema = new Schema<IDataset>(
   {
     name: {
       type: String,
-      required: [true, ''Dataset name is required''],
+      required: true,
       trim: true,
     },
     description: {
@@ -31,7 +38,7 @@ const datasetSchema = new Schema<IDataset>(
     },
     type: {
       type: String,
-      enum: [''pdf'', ''txt'', ''pubmedqa'', ''bioasq'', ''medquad'', ''json'', ''csv''],
+      enum: ["pdf", "txt", "pubmedqa", "bioasq", "medquad", "json", "csv"],
       required: true,
     },
     filePath: {
@@ -42,20 +49,20 @@ const datasetSchema = new Schema<IDataset>(
     documentCount: { type: Number },
     status: {
       type: String,
-      enum: [''pending'', ''processing'', ''indexed'', ''error''],
-      default: ''pending'',
+      enum: ["pending", "processing", "indexed", "error"],
+      default: "pending",
     },
     errorMessage: { type: String },
     uploadedBy: {
       type: Schema.Types.ObjectId,
-      ref: ''User'',
+      ref: "User",
       required: true,
     },
     indexedAt: { type: Date },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
-export default mongoose.model<IDataset>(''Dataset'', datasetSchema);
+export default mongoose.model<IDataset>("Dataset", datasetSchema);

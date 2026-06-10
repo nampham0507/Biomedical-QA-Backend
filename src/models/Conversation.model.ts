@@ -1,4 +1,4 @@
-import mongoose, { Document, Schema } from ''mongoose'';
+import mongoose, { Document, Schema } from "mongoose";
 
 export interface ISource {
   title: string;
@@ -28,25 +28,25 @@ const sourceSchema = new Schema<ISource>(
     dataset: { type: String },
     url: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const conversationSchema = new Schema<IConversation>(
   {
     userId: {
       type: Schema.Types.ObjectId,
-      ref: ''User'',
+      ref: "User",
       required: true,
       index: true,
     },
     question: {
       type: String,
-      required: [true, ''Question is required''],
+      required: true,
       trim: true,
     },
     answer: {
       type: String,
-      required: [true, ''Answer is required''],
+      required: true,
     },
     sources: [sourceSchema],
     sessionId: {
@@ -58,13 +58,13 @@ const conversationSchema = new Schema<IConversation>(
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 conversationSchema.index({ userId: 1, createdAt: -1 });
-conversationSchema.index({ question: ''text'', answer: ''text'' });
+conversationSchema.index({ question: "text", answer: "text" });
 
 export default mongoose.model<IConversation>(
-  ''Conversation'',
-  conversationSchema
+  "Conversation",
+  conversationSchema,
 );
