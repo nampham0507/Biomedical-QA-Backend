@@ -10,6 +10,9 @@ import { errorHandler } from "./middleware/error.middleware";
 import { notFound } from "./middleware/notFound.middleware";
 import logger from "./utils/logger";
 import qaRoutes from "./routes/qa.routes";
+import conversationRoutes from "./routes/conversation.routes";
+import favoriteRoutes from "./routes/favorite.routes";
+import userRoutes from "./routes/user.routes";
 
 const app = express();
 
@@ -55,6 +58,10 @@ if (process.env.NODE_ENV !== "test") {
 // ── Routes ─────────────────────────────────────────────────────
 app.use("/api/auth", authRoutes);
 app.use("/api/qa", qaRoutes);
+app.use("/api/conversations", conversationRoutes);
+app.use("/api/favorites", favoriteRoutes);
+app.use("/api/users", userRoutes);
+
 // ── Health check ───────────────────────────────────────────────
 app.get("/api/health", (_req, res) => {
   res.json({
