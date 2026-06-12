@@ -14,3 +14,5 @@ vector_store/*
 Thumbs.db
 .vscode/settings.json
 .idea/
+.claude/
+quota_rule.md

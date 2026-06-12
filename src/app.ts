@@ -13,6 +13,8 @@ import qaRoutes from "./routes/qa.routes";
 import conversationRoutes from "./routes/conversation.routes";
 import favoriteRoutes from "./routes/favorite.routes";
 import userRoutes from "./routes/user.routes";
+import datasetRoutes from "./routes/dataset.routes";
+import adminRoutes from "./routes/admin.routes";
 
 const app = express();
 
@@ -61,6 +63,8 @@ app.use("/api/qa", qaRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/favorites", favoriteRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/datasets", datasetRoutes);
+app.use("/api/admin", adminRoutes);
 
 // ── Health check ───────────────────────────────────────────────
 app.get("/api/health", (_req, res) => {
