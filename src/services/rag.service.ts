@@ -146,7 +146,8 @@ async function callOpenRouter(
 Answer questions accurately based on the provided biomedical literature context.
 Always cite your sources by referencing [Source N] in your answer.
 If the context is insufficient, clearly state the limitations.
-Use clear, professional medical language.`;
+Use clear, professional medical language.
+Always respond in the same language the user used to ask the question (e.g., if the question is in Vietnamese, answer in Vietnamese).`;
 
   const userPrompt = context
     ? `Context from biomedical literature:\n\n${context}\n\n---\n\nQuestion: ${question}\n\nProvide a comprehensive, evidence-based answer:`
